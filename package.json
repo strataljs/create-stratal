@@ -1,0 +1,46 @@
+{
+  "name": "create-stratal",
+  "version": "0.0.1",
+  "description": "Scaffold a new Stratal project from official templates",
+  "author": "Temitayo Fadojutimi",
+  "homepage": "https://stratal.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strataljs/create-stratal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/strataljs/create-stratal/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module",
+  "bin": "dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "keywords": [
+    "stratal",
+    "cloudflare",
+    "workers",
+    "scaffold",
+    "create"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@clack/prompts": "^1.0.1",
+    "giget": "^3.1.2",
+    "nypm": "^0.6.5",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.2",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "yarn@4.12.0"
+}
