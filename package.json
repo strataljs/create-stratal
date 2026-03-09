@@ -15,7 +15,9 @@
     "node": ">=22.0.0"
   },
   "type": "module",
-  "bin": "dist/index.mjs",
+  "bin": {
+    "create-stratal": "dist/index.mjs"
+  },
   "files": [
     "dist"
   ],
