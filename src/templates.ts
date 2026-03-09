@@ -48,6 +48,46 @@ export const templates: Template[] = [
     dir: "08-openapi",
     description: "OpenAPI docs with Scalar UI and Zod schema integration",
   },
+  {
+    name: "Seeders",
+    dir: "09-seeders",
+    description: "Database seeding with @stratal/seeders and stratal-seed CLI",
+  },
+  {
+    name: "Events",
+    dir: "10-events",
+    description: "Type-safe event system with @Listener and @On decorators",
+  },
+  {
+    name: "Auth",
+    dir: "11-auth",
+    description: "Session-based authentication with Better Auth",
+  },
+  {
+    name: "Database",
+    dir: "12-database",
+    description: "ZenStack ORM with PostgreSQL via Hyperdrive",
+  },
+  {
+    name: "RBAC",
+    dir: "13-rbac",
+    description: "Role-based access control with Casbin",
+  },
+  {
+    name: "Factories",
+    dir: "14-factories",
+    description: "Test data factories with Faker.js and state modifiers",
+  },
+  {
+    name: "Multi-Connection Database",
+    dir: "15-multi-connection-database",
+    description: "Multi-connection database with per-connection schema management",
+  },
+  {
+    name: "Workers",
+    dir: "16-workers",
+    description: "Durable Objects, Workflows, and WorkerEntrypoints with DI",
+  },
 ];
 
 const REPO = "strataljs/stratal";

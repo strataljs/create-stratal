@@ -37,6 +37,14 @@ This launches an interactive prompt to pick a template, then downloads it into `
 | `queues` | Queue producer/consumer pattern with Cloudflare Queues |
 | `scheduled-tasks` | Cron job scheduling with the CronJob interface |
 | `openapi` | OpenAPI docs with Scalar UI and Zod schema integration |
+| `seeders` | Database seeding with @stratal/seeders and stratal-seed CLI |
+| `events` | Type-safe event system with @Listener and @On decorators |
+| `auth` | Session-based authentication with Better Auth |
+| `database` | ZenStack ORM with PostgreSQL via Hyperdrive |
+| `rbac` | Role-based access control with Casbin |
+| `factories` | Test data factories with Faker.js and state modifiers |
+| `multi-connection-database` | Multi-connection database with per-connection schema management |
+| `workers` | Durable Objects, Workflows, and WorkerEntrypoints with DI |
 
 ## Examples
 
