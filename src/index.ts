@@ -3,31 +3,39 @@ import pc from "picocolors";
 import { templates } from "./templates.js";
 import { runPrompts, runPackageManagerPrompt } from "./prompts.js";
 import { installDependencies } from "nypm";
-import { scaffold } from "./scaffold.js";
+import { scaffold, installSkills } from "./scaffold.js";
 
 const HELP = `
 ${pc.bold("create-stratal")} — Scaffold a new Stratal project
 
 ${pc.bold("Usage:")}
-  npm create stratal [project-name] [options]
-  yarn create stratal [project-name] [options]
-  pnpm create stratal [project-name] [options]
+  npm create stratal@latest [project-name] [options]
+  yarn create stratal@latest [project-name] [options]
+  pnpm create stratal@latest [project-name] [options]
 
 ${pc.bold("Options:")}
   -t, --template <name>  Use a specific template (skip interactive selection)
+      --no-skills        Skip the Stratal agent skills
   -l, --list             List available templates
   -h, --help             Show this help message
 
 ${pc.bold("Examples:")}
-  npm create stratal my-app
-  npm create stratal my-app --template hello-world
-  npm create stratal my-app -t crud-api
+  npm create stratal@latest my-app
+  npm create stratal@latest my-app --template hello-world
+  npm create stratal@latest my-app -t crud-api
 `.trim();
 
 function parseArgs(argv: string[]) {
-  const args: { name?: string; template?: string; help: boolean; list: boolean } = {
+  const args: {
+    name?: string;
+    template?: string;
+    help: boolean;
+    list: boolean;
+    skills: boolean;
+  } = {
     help: false,
     list: false,
+    skills: true,
   };
 
   let i = 0;
@@ -37,6 +45,8 @@ function parseArgs(argv: string[]) {
       args.help = true;
     } else if (arg === "--list" || arg === "-l") {
       args.list = true;
+    } else if (arg === "--no-skills") {
+      args.skills = false;
     } else if (arg === "--template" || arg === "-t") {
       args.template = argv[++i];
     } else if (!arg.startsWith("-")) {
@@ -85,6 +95,18 @@ async function main() {
       error instanceof Error ? error.message : "An unknown error occurred",
     );
     process.exit(1);
+  }
+
+  if (args.skills) {
+    const skillsSpinner = p.spinner();
+    skillsSpinner.start("Adding Stratal agent skills...");
+    try {
+      await installSkills(result.targetDir);
+      skillsSpinner.stop("Added Stratal agent skills");
+    } catch {
+      // The project is usable without them, so this never fails the scaffold.
+      skillsSpinner.stop("Couldn't add the agent skills. Skipping.");
+    }
   }
 
   const packageManager = await runPackageManagerPrompt();

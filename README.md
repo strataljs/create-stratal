@@ -1,27 +1,33 @@
 # create-stratal
 
-Scaffold a new [Stratal](https://github.com/strataljs/stratal) project from official templates.
+Scaffold a new [Stratal](https://stratal.dev) project from official templates.
+
+[Documentation](https://stratal.dev) · [Stratal on GitHub](https://github.com/strataljs/stratal) · [Examples](https://github.com/strataljs/examples)
 
 ## Usage
 
 ```bash
 # npm
-npm create stratal my-app
+npm create stratal@latest my-app
 
 # yarn
-yarn create stratal my-app
+yarn create stratal@latest my-app
 
 # pnpm
-pnpm create stratal my-app
+pnpm create stratal@latest my-app
 ```
 
 This launches an interactive prompt to pick a template, then downloads it into `my-app/`.
+
+Every new project also gets the [Stratal agent skills](https://skills.sh/strataljs/stratal), so coding agents
+know the framework from the first prompt. Pass `--no-skills` to leave them out.
 
 ## CLI Flags
 
 | Flag | Description |
 | --- | --- |
 | `-t, --template <name>` | Skip the template picker and use a specific template |
+| `--no-skills` | Skip the Stratal agent skills |
 | `-l, --list` | List all available templates |
 | `-h, --help` | Show help |
 
@@ -45,22 +51,34 @@ This launches an interactive prompt to pick a template, then downloads it into `
 | `factories` | Test data factories with Faker.js and state modifiers |
 | `multi-connection-database` | Multi-connection database with per-connection schema management |
 | `workers` | Durable Objects, Workflows, and WorkerEntrypoints with DI |
+| `commands` | Custom Quarry CLI commands |
+| `inertia` | Inertia.js v3 with React SSR, typed props, and flash messages |
 
 ## Examples
 
 ```bash
 # Interactive mode
-npm create stratal my-app
+npm create stratal@latest my-app
 
 # Use a specific template
-npm create stratal my-app --template crud-api
+npm create stratal@latest my-app --template crud-api
 
 # Short flag
-npm create stratal my-app -t openapi
+npm create stratal@latest my-app -t openapi
 
 # List templates
-npm create stratal -- --list
+npm create stratal@latest -- --list
+
+# Skip the agent skills
+npm create stratal@latest my-app -t crud-api --no-skills
 ```
+
+## Links
+
+- [Documentation](https://stratal.dev)
+- [Stratal on GitHub](https://github.com/strataljs/stratal)
+- [Examples](https://github.com/strataljs/examples)
+- [Report an issue](https://github.com/strataljs/create-stratal/issues)
 
 ## License
 

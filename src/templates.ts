@@ -88,13 +88,23 @@ export const templates: Template[] = [
     dir: "16-workers",
     description: "Durable Objects, Workflows, and WorkerEntrypoints with DI",
   },
+  {
+    name: "Commands",
+    dir: "17-commands",
+    description: "Custom Quarry CLI commands",
+  },
+  {
+    name: "Inertia",
+    dir: "18-inertia",
+    description: "Inertia.js v3 with React SSR, typed props, and flash messages",
+  },
 ];
 
-const REPO = "strataljs/stratal";
+const REPO = "strataljs/examples";
 const BRANCH = "main";
 
 export function getGigetSource(dirName: string): string {
-  return `github:${REPO}/examples/${dirName}#${BRANCH}`;
+  return `github:${REPO}/${dirName}#${BRANCH}`;
 }
 
 export function findTemplateByName(name: string): Template | undefined {

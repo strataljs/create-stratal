@@ -15,9 +15,7 @@
     "node": ">=22.0.0"
   },
   "type": "module",
-  "bin": {
-    "create-stratal": "dist/index.mjs"
-  },
+  "bin": "dist/index.mjs",
   "files": [
     "dist"
   ],
@@ -35,17 +33,22 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@clack/prompts": "^1.0.1",
-    "giget": "^3.1.2",
-    "nypm": "^0.6.5",
+    "@clack/prompts": "^1.8.1",
+    "giget": "^3.3.1",
+    "nypm": "^0.6.10",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^25.3.2",
+    "@types/node": "^26.6.2",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   },
-  "packageManager": "yarn@4.12.0",
+  "dependenciesMeta": {
+    "esbuild": {
+      "built": false
+    }
+  },
+  "packageManager": "yarn@4.18.0",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
