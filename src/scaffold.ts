@@ -60,6 +60,8 @@ export async function installSkills(targetDir: string): Promise<void> {
   await execFileAsync(
     "npx",
     ["-y", "skills", "add", SKILLS_SOURCE, "-p", "-y"],
-    { cwd: targetDir },
+    // npx is a .cmd on Windows, which Node refuses to spawn without a shell.
+    // Every argument here is a constant, so there is nothing to inject.
+    { cwd: targetDir, shell: process.platform === "win32" },
   );
 }
