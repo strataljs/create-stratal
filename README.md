@@ -30,7 +30,7 @@ know the framework from the first prompt. Pass `--no-skills` to leave them out.
 | `-p, --package-manager <name>` | Install with `npm`, `yarn`, `pnpm`, or `bun` |
 | `--no-install` | Skip installing dependencies |
 | `--no-skills` | Skip the Stratal agent skills |
-| `--force` | Overwrite the target directory if it is not empty |
+| `--force` | Replace the contents of the target directory |
 | `-y, --yes` | Accept defaults instead of asking |
 | `-l, --list` | List all available templates |
 | `-h, --help` | Show help |
@@ -53,8 +53,12 @@ npm create stratal@latest my-app -t crud-api --no-install --no-skills
 npm create stratal@latest my-app --yes
 ```
 
-`--yes` will not overwrite an existing non-empty directory; pass `--force`
-for that. Run `--list` to see the template names `--template` accepts.
+`--force` empties the target directory before writing the template, so
+nothing from a previous project is left behind. `--yes` alone will not do
+this. The template is downloaded to a staging directory first, so a failed
+download leaves the existing directory untouched.
+
+Run `--list` to see the template names `--template` accepts.
 
 ## Available Templates
 

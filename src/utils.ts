@@ -15,6 +15,18 @@ export function targetDir(projectName: string): string {
   return path.resolve(process.cwd(), projectName);
 }
 
+/**
+ * The target has to sit strictly below the current directory. A name like
+ * "foo/.." passes the character check but resolves back to the directory the
+ * command was run in, which --force would then empty.
+ */
+export function isInsideCwd(dir: string): boolean {
+  const relative = path.relative(process.cwd(), dir);
+  return (
+    relative !== "" && !relative.startsWith("..") && !path.isAbsolute(relative)
+  );
+}
+
 export function directoryExists(dir: string): boolean {
   return existsSync(dir);
 }

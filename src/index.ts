@@ -24,7 +24,7 @@ ${pc.bold("Options:")}
   -p, --package-manager <name>  Install with npm, yarn, pnpm, or bun
       --no-install              Skip installing dependencies
       --no-skills               Skip the Stratal agent skills
-      --force                   Overwrite the target directory if it is not empty
+      --force                   Replace the contents of the target directory
   -y, --yes                     Accept defaults instead of asking
   -l, --list                    List available templates
   -h, --help                    Show this help message
@@ -145,7 +145,12 @@ async function main() {
   s.start(`Scaffolding ${pc.cyan(result.projectName)}...`);
 
   try {
-    await scaffold(result.template, result.targetDir, result.projectName);
+    await scaffold(
+      result.template,
+      result.targetDir,
+      result.projectName,
+      result.replace,
+    );
     s.stop(`Scaffolded ${pc.cyan(result.projectName)}`);
   } catch (error) {
     s.stop("Failed to scaffold project");

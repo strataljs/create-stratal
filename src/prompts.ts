@@ -5,6 +5,7 @@ import {
   targetDir,
   directoryExists,
   directoryIsEmpty,
+  isInsideCwd,
 } from "./utils.js";
 
 export type PackageManagerChoice = "npm" | "yarn" | "pnpm" | "bun";
@@ -34,6 +35,8 @@ interface PromptResult {
   projectName: string;
   template: Template;
   targetDir: string;
+  /** The directory held other files and the user agreed to replace them. */
+  replace: boolean;
 }
 
 /** A prompt can only be shown when someone is there to answer it. */
@@ -117,27 +120,37 @@ export async function runPrompts(
 
   // Overwrite check
   const dir = targetDir(projectName);
-  if (directoryExists(dir) && !directoryIsEmpty(dir) && !options.force) {
-    // Overwriting existing work is never a safe default, so --yes alone
-    // is not enough to agree to it.
-    if (options.yes || !canPrompt()) {
-      p.log.error(
-        `Directory "${projectName}" is not empty. Pass --force to overwrite it.`,
-      );
-      return undefined;
-    }
+  if (!isInsideCwd(dir)) {
+    p.log.error("Project name must be a folder inside this directory.");
+    return undefined;
+  }
 
-    const overwrite = await p.confirm({
-      message: `Directory "${projectName}" already exists and is not empty. Overwrite?`,
-      initialValue: false,
-    });
-    if (p.isCancel(overwrite) || !overwrite) {
-      p.cancel("Operation cancelled.");
-      return undefined;
+  let replace = false;
+  if (directoryExists(dir) && !directoryIsEmpty(dir)) {
+    replace = true;
+
+    if (!options.force) {
+      // Replacing existing work is never a safe default, so --yes alone
+      // is not enough to agree to it.
+      if (options.yes || !canPrompt()) {
+        p.log.error(
+          `Directory "${projectName}" is not empty. Pass --force to replace it.`,
+        );
+        return undefined;
+      }
+
+      const overwrite = await p.confirm({
+        message: `Directory "${projectName}" already exists. Replace everything in it?`,
+        initialValue: false,
+      });
+      if (p.isCancel(overwrite) || !overwrite) {
+        p.cancel("Operation cancelled.");
+        return undefined;
+      }
     }
   }
 
-  return { projectName, template, targetDir: dir };
+  return { projectName, template, targetDir: dir, replace };
 }
 
 /**
