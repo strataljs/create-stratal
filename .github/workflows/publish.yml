@@ -2,25 +2,46 @@ name: Publish to npm
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
+
+permissions:
+  contents: read
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
+      # Needed to create the GitHub release.
       contents: write
+      # Mints the OIDC token npm exchanges for publish rights. Trusted
+      # publishing attaches a provenance statement on its own, so there is
+      # no --provenance flag and no npm token to rotate.
       id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Trusted publishing needs npm 11.5.1+, which Node 24 ships.
+          node-version: 24
           registry-url: https://registry.npmjs.org
       - run: corepack enable
       - run: yarn install --immutable
+      - run: yarn typecheck
       - run: yarn build
+
+      - name: Check the tag matches the package version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          version="$(node -p 'require("./package.json").version')"
+          if [ "$tag" != "$version" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package.json version $version" >&2
+            exit 1
+          fi
+
       - name: Publish to npm
-        run: npm publish --provenance --access public
+        run: npm publish
+
       - name: Create GitHub Release
-        run: gh release create ${{ github.ref_name }} --generate-notes
+        run: gh release create "$GITHUB_REF_NAME" --generate-notes
         env:
           GH_TOKEN: ${{ github.token }}
