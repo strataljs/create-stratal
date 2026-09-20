@@ -27,9 +27,34 @@ know the framework from the first prompt. Pass `--no-skills` to leave them out.
 | Flag | Description |
 | --- | --- |
 | `-t, --template <name>` | Skip the template picker and use a specific template |
+| `-p, --package-manager <name>` | Install with `npm`, `yarn`, `pnpm`, or `bun` |
+| `--no-install` | Skip installing dependencies |
 | `--no-skills` | Skip the Stratal agent skills |
+| `--force` | Overwrite the target directory if it is not empty |
+| `-y, --yes` | Accept defaults instead of asking |
 | `-l, --list` | List all available templates |
 | `-h, --help` | Show help |
+
+## Non-interactive use
+
+Every question has a flag, so the CLI can run unattended — useful in CI or
+when an agent drives it. Outside a terminal it never prompts: anything left
+unanswered is reported as an error naming the flag to pass, so a run either
+completes or exits non-zero, and never hangs waiting for input.
+
+```bash
+# Fully specified
+npm create stratal@latest my-app -t crud-api -p npm
+
+# Scaffold only, no install and no skills
+npm create stratal@latest my-app -t crud-api --no-install --no-skills
+
+# Accept every default (hello-world, the package manager that invoked it)
+npm create stratal@latest my-app --yes
+```
+
+`--yes` will not overwrite an existing non-empty directory; pass `--force`
+for that. Run `--list` to see the template names `--template` accepts.
 
 ## Available Templates
 
